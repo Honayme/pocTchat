@@ -21,11 +21,14 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<!-- MySQL Connector -->
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
-			<version>8.2.0</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -58,7 +61,6 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.28</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<!-- Dépendances de test pour Spring -->

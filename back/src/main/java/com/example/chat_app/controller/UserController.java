@@ -1,7 +1,7 @@
-package com.example.tchat_app.controller;
+package com.example.chat_app.controller;
 
-import com.example.tchat_app.model.User;
-import com.example.tchat_app.services.UserService;
+import com.example.chat_app.model.User;
+import com.example.chat_app.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

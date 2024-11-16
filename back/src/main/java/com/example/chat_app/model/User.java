@@ -1,4 +1,4 @@
-package com.example.tchat_app.model;
+package com.example.chat_app.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +13,4 @@ public class User {
     private Long id;
     private String username;
     private String email;
-
-
 }
