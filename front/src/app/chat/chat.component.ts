@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { ChatService } from '../chat.service';
 import {FormsModule} from "@angular/forms";
-import {NgForOf} from "@angular/common";
+import {DatePipe, NgForOf} from "@angular/common";
+
+interface ChatMessage {
+  sender: string;
+  content: string;
+  timestamp: string;
+}
 
 @Component({
   selector: 'app-chat',
@@ -9,25 +15,26 @@ import {NgForOf} from "@angular/common";
   standalone: true,
   imports: [
     FormsModule,
-    NgForOf
+    NgForOf,
+    DatePipe
   ],
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
-  newMessage = '';
-  messages: string[] = [];
+  messages: ChatMessage[] = [];
+  newMessage: string = '';
 
   constructor(private chatService: ChatService) {
-    // S'abonner aux messages pour la mise à jour en temps réel
-    this.chatService.messages$.subscribe((messages) => {
-      this.messages = messages;
+    // S'abonner aux messages du service
+    this.chatService.messages$.subscribe((msgs) => {
+      this.messages = msgs;
     });
   }
 
-  sendMessage(): void {
+  sendMessage() {
     if (this.newMessage.trim()) {
-      this.chatService.sendMessage(this.newMessage);
-      this.newMessage = ''; // Réinitialiser le champ de saisie
+      this.chatService.sendMessage(this.newMessage.trim());
+      this.newMessage = '';
     }
   }
 }

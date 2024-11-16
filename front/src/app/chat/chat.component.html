@@ -1,16 +1,11 @@
-<div class="chat-container">
-  <h2>Chat en temps réel</h2>
-  <div class="messages">
+<div>
+  <h2>Chat</h2>
+  <div class="chat-window">
     <div *ngFor="let message of messages">
-      {{ message }}
+      <strong>{{ message.sender }}</strong>: {{ message.content }}
+      <span class="timestamp">{{ message.timestamp | date: 'shortTime' }}</span>
     </div>
   </div>
-  <div class="input-container">
-    <input
-      [(ngModel)]="newMessage"
-      placeholder="Tapez votre message"
-      (keyup.enter)="sendMessage()"
-    />
-    <button (click)="sendMessage()">Envoyer</button>
-  </div>
+  <input [(ngModel)]="newMessage" placeholder="Votre message" />
+  <button (click)="sendMessage()">Envoyer</button>
 </div>

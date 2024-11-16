@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+interface ChatMessage {
+  sender: string;
+  content: string;
+  timestamp: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
   private socket!: WebSocket;
-  private messagesSubject = new BehaviorSubject<string[]>([]);
+  private messagesSubject = new BehaviorSubject<ChatMessage[]>([]);
   public messages$ = this.messagesSubject.asObservable();
 
   constructor() {
@@ -17,8 +23,6 @@ export class ChatService {
     // Connexion au serveur WebSocket
     this.socket = new WebSocket('/ws');
 
-
-
     // Événements de connexion
     this.socket.onopen = () => {
       console.log('Connecté au WebSocket');
@@ -26,8 +30,9 @@ export class ChatService {
 
     // Événements de réception de messages
     this.socket.onmessage = (event) => {
-      const messages = this.messagesSubject.value;
-      messages.push(event.data);
+      const messages = [...this.messagesSubject.value];
+      const messageData: ChatMessage = JSON.parse(event.data);
+      messages.push(messageData);
       this.messagesSubject.next(messages);
     };
 
@@ -43,9 +48,14 @@ export class ChatService {
   }
 
   // Envoyer un message au serveur
-  sendMessage(message: string): void {
+  sendMessage(content: string): void {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-      this.socket.send(message);
+      const messageData: ChatMessage = {
+        sender: 'Utilisateur', // Vous pouvez remplacer par le nom de l'utilisateur
+        content: content,
+        timestamp: new Date().toISOString(),
+      };
+      this.socket.send(JSON.stringify(messageData));
     } else {
       console.error('La connexion WebSocket n’est pas ouverte.');
     }
