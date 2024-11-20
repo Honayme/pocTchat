@@ -2,13 +2,15 @@ package com.example.chat_app.model;
 
 import jakarta.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
+
+import lombok.*;
+
 import java.time.LocalDateTime;
 
+
+@Data // Génère getters, setters, equals, hashCode, toString
+@NoArgsConstructor // Génère un constructeur sans arguments
+@AllArgsConstructor // Génère un constructeur avec tous les arguments
 @Document(collection = "messages")
 public class ChatMessage {
     @Id
@@ -16,10 +18,4 @@ public class ChatMessage {
     private String content;
     private String sender;
     private LocalDateTime timestamp;
-
-    public String getContent() {
-        return "";
-    }
-
-
 }
